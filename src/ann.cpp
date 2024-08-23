@@ -36,18 +36,18 @@ ANN::ANN(std::vector<std::vector<double>> *input_weights, std::vector<std::vecto
     m_input_outputlayer = new std::vector<double>(m_output_size);
 
     // Inicializa pesos (He)
-	// double he_hidden = sqrt(2.0/m_input_size);
-	// double he_output = sqrt(2.0/m_hidden_size);
+    double he_hidden = sqrt(2.0/m_input_size);
+    double he_output = sqrt(2.0/m_hidden_size);
 
-    // for (int i=0;i<m_input_size;i++) {
-    //     for (int j=0;j<m_hidden_size-1;j++) // bias oculto não está conectado com a camada de entrada
-	// 		(*m_input_weights)[i][j] = he_hidden*(2*(rand()/(double)RAND_MAX)-1);
-    // }
+    for (int i=0;i<m_input_size;i++) {
+         for (int j=0;j<m_hidden_size-1;j++) // bias oculto não está conectado com a camada de entrada
+	 		(*m_input_weights)[i][j] = he_hidden*(2*(rand()/(double)RAND_MAX)-1);
+    }
 
-    // for (int i=0;i<m_hidden_size;i++) {
-    //     for (int j=0;j<m_output_size;j++)
-	// 		(*m_hidden_weights)[i][j] = he_output*(2*(rand()/(double)RAND_MAX)-1);
-    // }
+    for (int i=0;i<m_hidden_size;i++) {
+         for (int j=0;j<m_output_size;j++)
+	 		(*m_hidden_weights)[i][j] = he_output*(2*(rand()/(double)RAND_MAX)-1);
+    }
 
     // Inicializa neurônios BIAS
     (*m_output_inputlayer)[input_size] = 1;
@@ -101,14 +101,14 @@ void ANN::calc_delta(std::vector<double> error, std::vector<std::vector<double>>
 
     // calcula o erro da camada de saída
     for (int i = 0; i < m_output_size; i++)
-        delta_output[i] = error[i] * dactf((*m_output_outputlayer)[i]);
+        delta_output[i] = error[i] * dactf((*m_input_outputlayer)[i]);
 
     // calcula o erro da camada oculta
     for (int i = 0; i < m_hidden_size; i++) {
         delta_hidden[i] = 0;
         for (int j = 0; j < m_output_size; j++)
             delta_hidden[i] += delta_output[j] * (*m_hidden_weights)[i][j];
-        delta_hidden[i] *= dactf((*m_output_hiddenlayer)[i]);
+        delta_hidden[i] *= dactf((*m_input_hiddenlayer)[i]);
     }
     for (int i = 0; i < m_hidden_size; i++) {
         for (int j = 0; j < m_output_size; j++)
