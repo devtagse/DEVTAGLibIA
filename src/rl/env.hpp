@@ -52,6 +52,13 @@ namespace ia {
 				return acts;
 			}
 
+			/// Retorna o número de passos por ação
+			/// @return Número de passos por ação
+			virtual int get_action_steps()
+			{
+				return 1;
+			}
+
 			/// Executa uma ação no ambiente.
 			/// @param a Ação para executar no ambiente.
 			/// @return Estrutura EnvOutcome como resultado da ação realizada no ambiente.

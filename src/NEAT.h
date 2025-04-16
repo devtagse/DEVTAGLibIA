@@ -1,5 +1,5 @@
 /*
- DEVTAGLibIA.h
+ NEAT.h
  Copyright (c) 2023 DEVTAG. Todos os direitos reservados.
   
  Este código faz parte do software SLAMduino, um produto desenvolvido
@@ -15,11 +15,18 @@
  https://devtag.com.br
  */
 
-#ifndef DEVTAGLibIA_H
-#define DEVTAGLibIA_H
+#ifndef NEAT_H
 
-#include <RL.h>
-#include <NEAT.h>
-#include <tiny_dnn/tiny_dnn.h>
+#define NEAT_H
+
+#include "neat/ConnectionGene.hpp"
+#include "neat/EvolutionNet.hpp"
+#include "neat/FlatMap.hpp"
+#include "neat/FlatSet.hpp"
+#include "neat/Genome.hpp"
+#include "neat/Network.hpp"
+#include "neat/Population.hpp"
+#include "neat/Random.hpp"
+#include "neat/Types.hpp"
 
 #endif

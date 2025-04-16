@@ -1,5 +1,5 @@
 /*
- DEVTAGLibIA.h
+ actor.hpp
  Copyright (c) 2023 DEVTAG. Todos os direitos reservados.
   
  Este código faz parte do software SLAMduino, um produto desenvolvido
@@ -15,11 +15,21 @@
  https://devtag.com.br
  */
 
-#ifndef DEVTAGLibIA_H
-#define DEVTAGLibIA_H
+#include "state.hpp"
+#include "envoutcome.hpp"
 
-#include <RL.h>
-#include <NEAT.h>
-#include <tiny_dnn/tiny_dnn.h>
+namespace ia {
+	namespace rl {
+        class Actor {
+        public:
+            virtual void startEpisode(State *s)=0;
+            virtual void endEpisode()=0;
 
-#endif
+            virtual void update(EnvOutcome *eo, double critique)=0;
+
+            virtual void reset()=0;
+
+            virtual Action *action(State *s)=0;
+        }
+    }
+}

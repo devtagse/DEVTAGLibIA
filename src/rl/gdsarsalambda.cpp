@@ -33,6 +33,7 @@ Episode *GDSarsaLambda::run_learning(Env *env, int max_steps)
     std::vector<int> delete_traces;
 
     Action *action = egreedy_action(env, curr_s);
+    int count_action_steps = 0;
     while (!env->is_terminal() && (m_curr_step < max_steps || max_steps == -1)) {
         // get Q-value and gradient
         double curr_Q = m_vfa->evaluate(*curr_s, *action);
@@ -40,10 +41,15 @@ Episode *GDSarsaLambda::run_learning(Env *env, int max_steps)
 
         EnvOutcome *eo = env->exec_act(action);
         State *next_s = eo->m_op;
+        count_action_steps++;
 
         // determine next Q-value for outcome state
-        Action *next_a = egreedy_action(env, next_s);
         double next_Q = 0.;
+        Action *next_a = action;
+        if (count_action_steps >= env->get_action_steps()) {
+            next_a = egreedy_action(env, next_s);
+            count_action_steps=0;
+        }
         if (!eo->m_terminated)
             next_Q = m_vfa->evaluate(*next_s, *next_a);
 
